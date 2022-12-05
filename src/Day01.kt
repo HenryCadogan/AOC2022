@@ -1,17 +1,31 @@
 fun main() {
+    val input = readInput("Day01")
+
+    fun calculateTotals(input: List<String>): List<Int> {
+        var currentElfTotal = 0
+        val totals = mutableListOf<Int>()
+        input.forEach {
+            when {
+                it != "" -> currentElfTotal += it.toInt()
+                else -> {
+                    totals.add(currentElfTotal)
+                    currentElfTotal = 0
+                }
+            }
+        }
+        return totals
+    }
+
     fun part1(input: List<String>): Int {
-        return input.size
+        return calculateTotals(input).max()
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        return calculateTotals(input).sortedDescending().take(3).sum()
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+    check(part1(readInput("Day01_test")) == 24000)
 
-    val input = readInput("Day01")
     println(part1(input))
     println(part2(input))
 }
